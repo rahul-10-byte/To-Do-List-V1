@@ -10,12 +10,38 @@ app.set("view engine", "ejs");
 app.get("/", function (req, res) {
 
     var today = new Date();
-    
-    if (today.getDay() === 5) {
-        res.sendFile(__dirname + "/index.html");
-    }else{
-        res.send("uh oh! It's Work Time!");
+    var currentDay = today.getDay();
+    var day = "";
+
+    switch (currentDay) {
+        case 0:
+            day = "Sunday";
+            break;
+        case 1:
+            day = "Monday";
+            break;
+        case 2:
+            day = "Tuesday";
+            break;
+        case 3:
+            day = "Wednesday";
+            break;
+        case 4:
+            day = "Thursday";
+            break;
+        case 5:
+            day = "Friday";
+            break;
+        case 6:
+            day = "Saturday";
+            break;
+        default:
+            console.log("Error current day is equal to" + currentDay);
     }
+
+    res.render("list", {
+        kindOfDay: day
+    });
 
 });
 
