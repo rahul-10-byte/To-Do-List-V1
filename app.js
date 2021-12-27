@@ -5,9 +5,9 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
-var items = ["Buy Food", "Cook Food", "Eat Food"];
+var items = ["Buy Food", "Cook Food", "Eat Food"];      //array to add new list items
 
-app.set("view engine", "ejs");
+app.set("view engine", "ejs");      //starting EJS engine
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -23,9 +23,9 @@ app.get("/", function (req, res) {
         month: "long"
     };
 
-    var day = today.toLocaleDateString("en-US", options);
+    var day = today.toLocaleDateString("en-US", options);  //to convert date in English format
 
-    res.render("list", {
+    res.render("list", {            //render function in EJS to transfer values to ejs template
         kindOfDay: day,
         newListItems: items
     });
