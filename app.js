@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const app = express();
 
 let items = ["Buy Food", "Cook Food", "Eat Food"];      //array to add new list items
+let workItems = [];
 
 app.set("view engine", "ejs");      //starting EJS engine
 
@@ -28,7 +29,7 @@ app.get("/", function (req, res) {
     let day = today.toLocaleDateString("en-US", options);  //to convert date in English format
 
     res.render("list", {            //render function in EJS to transfer values to ejs template
-        kindOfDay: day,
+        listTitle: day,
         newListItems: items
     });
 
@@ -38,9 +39,20 @@ app.post("/", function (req, res) {
 
     let item = req.body.newItem;
 
-    items.push(item);
+    if(req.body.list === "Work") {
+        workItems.push(item);
+        res.redirect("/work")
+    } else {
+        items.push(item);
+        res.redirect("/");
+    }
 
-    res.redirect("/");
+});
+
+app.get("/work", function (req, res) {
+
+    res.render("list", {listTitle: "Work List", newListItems: workItems});
+
 });
 
 app.listen(process.env.PORT || 3000, function () {
